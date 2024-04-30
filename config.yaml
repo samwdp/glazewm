@@ -51,13 +51,13 @@ focus_borders:
     color: *red
 
 bar:
-  height: "30px"
+  height: "32px"
   position: "top"
   opacity: 1.0
   background: *bg
   foreground: *fg
-  font_family: "Segoe UI"
-  font_size: "13px"
+  font_family: "Hack Nerd Font"
+  font_size: "16px"
   padding: "4px 6px"
   offset_x: "0"
   offset_y: "0"
@@ -92,14 +92,29 @@ bar:
 
 workspaces:
   - name: "1"
+    bind_to_monitor: 1
+    display_name: "󰽰"
   - name: "2"
+    bind_to_monitor: 1
+    display_name: "󰚗"
   - name: "3"
+    bind_to_monitor: 1
+    display_name: ""
   - name: "4"
+    bind_to_monitor: 1
+    display_name: ""
   - name: "5"
+    bind_to_monitor: 3
+    display_name: "󰒱"
   - name: "6"
+    bind_to_monitor: 3
+    display_name: "󰊻"
   - name: "7"
+    bind_to_monitor: 3
   - name: "8"
+    bind_to_monitor: 3
   - name: "9"
+    bind_to_monitor: 3
 
 window_rules:
   # Task Manager requires admin privileges to manage and should be ignored unless running
@@ -128,7 +143,7 @@ window_rules:
     match_process_name: "slack"
 
   - command: "move to workspace 6"
-    match_process_name: "(teams|discord|unigram)"
+    match_process_name: "/teams|msteams/"
 
 binding_modes:
   - name: "resize"
@@ -224,6 +239,9 @@ keybindings:
 
   - command: 'exec %ProgramFiles%/BraveSoftware/Brave-Browser/Application/brave.exe --profile-directory="Profile 1"'
     binding: "Alt+Shift+W"
+
+  - command: "exec %ProgramFiles%/BraveSoftware/Brave-Browser/Application/chrome_proxy.exe --profile-directory=Default --app-id=cinhimbnkkaeohfgghhklpknlkffjgod"
+    binding: "Alt+Shift+M"
 
   # Focus the workspace that last had focus.
   - command: "focus workspace recent"

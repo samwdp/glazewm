@@ -59,9 +59,9 @@ bar:
   font_family: "Hack Nerd Font"
   font_size: "16px"
   padding: "4px 6px"
-  offset_x: "0"
-  offset_y: "0"
-  border_radius: "0"
+  offset_x: 0
+  offset_y: 0
+  border_radius: 0
   components_left:
     - type: "workspaces"
       focused_workspace_background: *bg2
@@ -95,26 +95,29 @@ workspaces:
     bind_to_monitor: 1
     display_name: "󰽰"
   - name: "2"
-    bind_to_monitor: 1
+    bind_to_monitor: 2
     display_name: "󰚗"
   - name: "3"
-    bind_to_monitor: 1
+    bind_to_monitor: 2
     display_name: ""
   - name: "4"
-    bind_to_monitor: 1
+    bind_to_monitor: 2
     display_name: ""
   - name: "5"
-    bind_to_monitor: 3
-    display_name: "󰒱"
+    bind_to_monitor: 2
+    display_name: "󱘯"
   - name: "6"
-    bind_to_monitor: 3
-    display_name: "󰊻"
+    bind_to_monitor: 1
+    display_name: "󰒱"
   - name: "7"
-    bind_to_monitor: 3
+    bind_to_monitor: 1
+    display_name: "󰊻"
   - name: "8"
-    bind_to_monitor: 3
+    bind_to_monitor: 1
+    display_name: "📬"
   - name: "9"
-    bind_to_monitor: 3
+    bind_to_monitor: 1
+    display_name: ""
 
 window_rules:
   # Task Manager requires admin privileges to manage and should be ignored unless running
@@ -136,14 +139,20 @@ window_rules:
   - command: "resize borders 0px -7px -7px -7px"
     match_process_name: "steam"
 
-  - command: "move to workspace 4"
-    match_process_name: "wezterm-gui"
+  - command: "resize borders 0px -10px -10px -10px"
+    match_process_name: "Terminal"
 
-  - command: "move to workspace 5"
-    match_process_name: "slack"
+  - command: "move to workspace 4"
+    match_process_name: "/wezterm-gui|Terminal/"
 
   - command: "move to workspace 6"
+    match_process_name: "slack"
+
+  - command: "move to workspace 7"
     match_process_name: "/teams|msteams/"
+
+  - command: "move to workspace 8"
+    match_process_name: "/[oO]utlook|[mM]icrosoft [oO]utlook|[oO]utlook (new)/"
 
 binding_modes:
   - name: "resize"
@@ -231,17 +240,22 @@ keybindings:
 
   # Launch CMD terminal (alternatively `exec wt` or `exec %ProgramFiles%/Git/git-bash.exe`
   # to start Windows Terminal and Git Bash respectively.
+  - command: "exec wt"
+    binding: "Alt+Shift+Enter"
+
   - command: "exec %ProgramFiles%/WezTerm/wezterm-gui.exe"
     binding: "Alt+Enter"
 
-  - command: 'exec %ProgramFiles%/BraveSoftware/Brave-Browser/Application/brave.exe --profile-directory="Default"'
+  - command: 'exec %ProgramFiles%/BraveSoftware/Brave-Browser/Application/chrome_proxy.exe --profile-directory="Sam"'
     binding: "Alt+W"
 
-  - command: 'exec %ProgramFiles%/BraveSoftware/Brave-Browser/Application/brave.exe --profile-directory="Profile 1"'
+  - command: 'exec %ProgramFiles%/BraveSoftware/Brave-Browser/Application/chrome_proxy.exe --profile-directory="Work"'
     binding: "Alt+Shift+W"
 
-  - command: "exec %ProgramFiles%/BraveSoftware/Brave-Browser/Application/chrome_proxy.exe --profile-directory=Default --app-id=cinhimbnkkaeohfgghhklpknlkffjgod"
+  - command: 'exec %ProgramFiles%/BraveSoftware/Brave-Browser/Application/chrome_proxy.exe  --profile-directory=sam --app-id=cinhimbnkkaeohfgghhklpknlkffjgod'
     binding: "Alt+Shift+M"
+
+  # - command: "exec %ProgramFiles%/BraveSoftware/Brave-Browser/Application/chrome_proxy.exe --profile-directory=Default --app-id=cinhimbnkkaeohfgghhklpknlkffjgod"
 
   # Focus the workspace that last had focus.
   - command: "focus workspace recent"

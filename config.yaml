@@ -34,10 +34,10 @@ general:
 
 gaps:
   # Gap between adjacent windows.
-  inner_gap: "10px"
+  inner_gap: "5px"
 
   # Gap between windows and the screen edge.
-  outer_gap: "10px"
+  outer_gap: "5px"
 
 # Highlight active/inactive windows with a colored border.
 # ** Exclusive to Windows 11 due to API limitations.
@@ -144,6 +144,9 @@ window_rules:
 
   - command: "move to workspace 4"
     match_process_name: "/wezterm-gui|Terminal/"
+
+  - command: "move to workspace 5"
+    match_process_name: "/SSMS|SSMS 20|SSMS 20 (32 bit)|ssms/"
 
   - command: "move to workspace 6"
     match_process_name: "slack"
@@ -289,7 +292,7 @@ keybindings:
 
   # Move focused workspace to a monitor in a given direction.
   - command: "move workspace left"
-    binding: "Alt+A"
+    binding: "Alt+G"
   - command: "move workspace right"
     binding: "Alt+F"
   - command: "move workspace up"

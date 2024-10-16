@@ -40,7 +40,7 @@ window/bar:
     font-size: 12px;
     padding: 4px 24px;
     border-bottom: 1px solid rgb(255 255 255 / 5%);
-    background: linear-gradient(rgb(0 0 0 / 90%), rgb(28 28 28 / 85%));
+    background: linear-gradient(rgb(0 0 0 / 20%), rgb(28 28 28 / 20%));
 
     i {
       color: rgb(69 133 136 / 95%);

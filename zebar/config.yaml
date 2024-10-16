@@ -35,15 +35,15 @@ window/bar:
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
     height: 100%;
-    color: rgb(235 219 178 / 90%);
+    color: rgb(235 219 178 / 100%);
     font-family: Hack Nerd Font;
     font-size: 12px;
     padding: 4px 24px;
     border-bottom: 1px solid rgb(255 255 255 / 5%);
-    background: linear-gradient(rgb(0 0 0 / 20%), rgb(28 28 28 / 20%));
+    background: linear-gradient(rgb(0 0 0 / 30%), rgb(28 28 28 / 30%));
 
     i {
-      color: rgb(69 133 136 / 95%);
+      color: rgb(69 133 136 / 100%);
       margin-right: 7px;
     }
 

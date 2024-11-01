@@ -110,7 +110,12 @@ workspaces:
 window_rules:
   - commands: ["move --workspace 1"]
     match: 
-      - window_process: { regex: "brave" }
+      - window_process: { regex: "brave|youtube-music-desktop-app" }
+
+  - commands: ["move --workspace 1"]
+    match: 
+      - window_process: { regex: "devenv" }
+
   - commands: ["move --workspace 3"]
     match: 
       - window_process: { regex: "zen" }
@@ -121,7 +126,7 @@ window_rules:
 
   - commands: ["move --workspace 5"]
     match: 
-      - window_process: { regex: "devenv|[Ss]sms" }
+      - window_process: { regex: "[Ss]sms" }
 
   - commands: ["move --workspace 6"]
     match:
@@ -266,7 +271,7 @@ keybindings:
   - commands: ['shell-exec %ProgramFiles%/Zen Twilight/zen.exe']
     bindings: ['alt+w']
 
-  - commands: ['shell-exec %ProgramFiles%/BraveSoftware/Brave-Browser/Application/chrome_proxy.exe  --profile-directory="sam" --app-id=cinhimbnkkaeohfgghhklpknlkffjgod']
+  - commands: ['shell-exec %userprofile%/AppData/Local/youtube_music_desktop_app/app-2.0.6/youtube-music-desktop-app.exe']
     bindings: ['alt+shift+m']
 
 

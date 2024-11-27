@@ -268,8 +268,11 @@ keybindings:
   - commands: ['shell-exec wezterm-gui']
     bindings: ['alt+enter']
 
-  - commands: ['shell-exec %ProgramFiles%/Zen Twilight/zen.exe']
+  - commands: ['shell-exec %ProgramFiles%/Zen Browser/zen.exe']
     bindings: ['alt+w']
+
+  - commands: ['shell-exec %ProgramFiles%/Zen Twilight/zen.exe']
+    bindings: ['alt+shift+w']
 
   - commands: ['shell-exec %userprofile%/AppData/Local/youtube_music_desktop_app/app-2.0.6/youtube-music-desktop-app.exe']
     bindings: ['alt+shift+m']

@@ -153,7 +153,7 @@ window_rules:
 
   - commands: ["move --workspace 4"]
     match: 
-      - window_process: { regex: "wezterm-gui|Terminal" }
+      - window_process: { regex: "wezterm-gui|Terminal|speedcrunch" }
 
   - commands: ["move --workspace 5"]
     match: 
@@ -297,6 +297,9 @@ keybindings:
 
   - commands: ['shell-exec %ProgramFiles%/Zen Twilight/zen.exe']
     bindings: ['alt+w']
+
+  - commands: ['shell-exec c:/Program Files (x86)/SpeedCrunch/speedcrunch.exe']
+    bindings: ['alt+c']
 
   - commands: ['shell-exec %userprofile%/AppData/Local/youtube_music_desktop_app/app-2.0.6/youtube-music-desktop-app.exe']
     bindings: ['alt+shift+m']

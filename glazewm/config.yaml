@@ -6,11 +6,18 @@ bg: &bg "#282828"
 bg1: &bg1 "#3c3836"
 bg2: &bg2 "#504945"
 fg: &fg "#ebdbb2"
-
 general:
-  # Commands to run when the WM has started (e.g. to run a script or launch
-  # another application). Here we are running a batch script to start Zebar.
-  startup_commands: ['shell-exec %userprofile%/.glzr/zebar/start.bat']
+  # Commands to run when the WM has started. This is useful for running a
+  # script or launching another application.
+  # Example: The below command launches Zebar.
+  startup_commands: ['shell-exec zebar']
+
+  # Commands to run just before the WM is shutdown.
+  # Example: The below command kills Zebar.
+  shutdown_commands: ['shell-exec taskkill /IM zebar.exe /F']
+
+  # Commands to run after the WM config is reloaded.
+  config_reload_commands: ['shell-exec taskkill /IM zebar.exe /F', 'shell-exec zebar']
 
   # Whether to automatically focus windows underneath the cursor.
   focus_follows_cursor: false
@@ -28,9 +35,24 @@ general:
     # - 'window_focus': Jump when focus changes between windows.
     trigger: 'monitor_focus'
 
+  # How windows should be hidden when switching workspaces.
+  # - 'cloak': Recommended. Hides windows with no animation.
+  # - 'hide': Legacy method (v3.5 and earlier) that has a brief animation,
+  # but has stability issues with some apps.
+  hide_method: 'cloak'
+
+  # Affects which windows get shown in the native Windows taskbar. Has no
+  # effect if `hide_method: 'hide'`.
+  # - 'true': Show all windows (regardless of workspace).
+  # - 'false': Only show windows from the currently shown workspaces.
+  show_all_in_taskbar: false
+
 gaps:
+  # Whether to scale the gaps with the DPI of the monitor.
+  scale_with_dpi: true
+
   # Gap between adjacent windows.
-  inner_gap: '5px'
+  inner_gap: '10px'
 
   # Gap between windows and the screen edge.
   outer_gap:
@@ -48,11 +70,28 @@ window_effects:
       enabled: true
       color: *yellow
 
+    # Remove the title bar from the window's frame. Note that this can
+    # cause rendering issues for some applications.
+    hide_title_bar:
+      enabled: false
+
+    # Change the corner style of the window's frame.
+    # ** Exclusive to Windows 11 due to API limitations.
+    corner_style:
+      enabled: false
+      # Allowed values: 'square', 'rounded', 'small_rounded'.
+      style: 'square'
+
   # Visual effects to apply to non-focused windows.
   other_windows:
     border:
+      enabled: true
+      color: '#a1a1a1'
+    hide_title_bar:
       enabled: false
-      color: *red
+    corner_style:
+      enabled: false
+      style: 'square'
 
 window_behavior:
   # New windows are created in this state whenever possible.
@@ -79,33 +118,25 @@ window_behavior:
       shown_on_top: false
 
 workspaces:
+
   - name: "1"
     bind_to_monitor: 0
-    display_name: "󰽰"
   - name: "2"
     bind_to_monitor: 1
-    display_name: ""
   - name: "3"
     bind_to_monitor: 1
-    display_name: ""
   - name: "4"
     bind_to_monitor: 1
-    display_name: ""
   - name: "5"
     bind_to_monitor: 1
-    display_name: "󱘯"
   - name: "6"
     bind_to_monitor: 0
-    display_name: "󰒱"
   - name: "7"
     bind_to_monitor: 0
-    display_name: "󰊻"
   - name: "8"
     bind_to_monitor: 0
-    display_name: "󰇮"
   - name: "9"
     bind_to_monitor: 0
-    display_name: ""
 
 window_rules:
   - commands: ["move --workspace 1"]
@@ -126,7 +157,7 @@ window_rules:
 
   - commands: ["move --workspace 5"]
     match: 
-      - window_process: { regex: "[Ss]sms" }
+      - window_process: { regex: "[Ss]sms|SSMS" }
 
   - commands: ["move --workspace 6"]
     match:
@@ -139,7 +170,6 @@ window_rules:
   - commands: ["move --workspace 8"]
     match:
       - window_process: { regex: "olk" }
-
   - commands: ['ignore']
     match:
       # Ignores any Zebar windows.
@@ -150,9 +180,12 @@ window_rules:
         window_class: { regex: 'Chrome_WidgetWin_1|MozillaDialogClass' }
 
       # Ignore rules for various 3rd-party apps.
-      - window_process: { equals: 'PowerToys.PowerAccent' }
+      - window_process: { equals: 'PowerToys' }
+        window_class: { regex: 'HwndWrapper\[PowerToys\.PowerAccent.*?\]' }
+      - window_process: { equals: 'PowerToys' }
+        window_title: { regex: '.*? - Peek' }
       - window_process: { equals: 'Lively' }
-        window_class: { regex: 'HwndWrapper*' }
+        window_class: { regex: 'HwndWrapper' }
 
 binding_modes:
   # When enabled, the focused window can be resized via arrow keys or HJKL.
@@ -169,13 +202,6 @@ binding_modes:
       # Press enter/escape to return to default keybindings.
       - commands: ['wm-disable-binding-mode --name resize']
         bindings: ['escape', 'enter']
-
-  # When enabled, all keybindings are disabled except for alt+shift+p which
-  # returns to default keybindings.
-  - name: 'pause'
-    keybindings:
-      - commands: ['wm-disable-binding-mode --name pause']
-        bindings: ['alt+shift+p']
 
 keybindings:
   # Shift focus in a given direction.
@@ -214,8 +240,9 @@ keybindings:
   - commands: ['wm-enable-binding-mode --name resize']
     bindings: ['alt+r']
 
-  # Disables all keybindings until alt+shift+p is pressed again.
-  - commands: ['wm-enable-binding-mode --name pause']
+  # Disables window management and all other keybindings until alt+shift+p
+  # is pressed again.
+  - commands: ['wm-toggle-pause']
     bindings: ['alt+shift+p']
 
   # Change tiling direction. This determines where new tiling windows will
@@ -248,12 +275,12 @@ keybindings:
     bindings: ['alt+shift+q']
 
   # Kill GlazeWM process safely.
-  - commands: ['shell-exec taskkill /IM "zebar.exe" /F', 'wm-exit']
+  - commands: ['wm-exit']
     bindings: ['alt+shift+e']
 
   # Re-evaluate configuration file.
-  - commands: ["wm-reload-config", 'shell-exec taskkill /IM "zebar.exe" /F', "shell-exec %userprofile%/.glzr/zebar/start.bat",]
-    bindings: ["alt+shift+r"]
+  - commands: ['wm-reload-config']
+    bindings: ['alt+shift+r']
 
   # Redraw all windows.
   - commands: ['wm-redraw']
@@ -262,26 +289,22 @@ keybindings:
   # Launch CMD terminal. Alternatively, use `shell-exec wt` or
   # `shell-exec %ProgramFiles%/Git/git-bash.exe` to start Windows
   # Terminal and Git Bash respectively.
-  - commands: ['shell-exec cmd']
-    bindings: ['alt+shift+enter']
-
   - commands: ['shell-exec wezterm-gui']
     bindings: ['alt+enter']
 
   - commands: ['shell-exec %ProgramFiles%/Zen Browser/zen.exe']
-    bindings: ['alt+w']
+    bindings: ['alt+shift+w']
 
   - commands: ['shell-exec %ProgramFiles%/Zen Twilight/zen.exe']
-    bindings: ['alt+shift+w']
+    bindings: ['alt+w']
 
   - commands: ['shell-exec %userprofile%/AppData/Local/youtube_music_desktop_app/app-2.0.6/youtube-music-desktop-app.exe']
     bindings: ['alt+shift+m']
 
-
-  # Focus the next/previous workspace defined in `workspaces` config.
-  - commands: ['focus --next-workspace']
+  # Focus the next/previous active workspace defined in `workspaces` config.
+  - commands: ['focus --next-active-workspace']
     bindings: ['alt+s']
-  - commands: ['focus --prev-workspace']
+  - commands: ['focus --prev-active-workspace']
     bindings: ['alt+a']
 
   # Focus the workspace that last had focus.

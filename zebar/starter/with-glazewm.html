@@ -15,10 +15,10 @@
 
     <!-- Allows React to be run buildless via "text/babel" script below. -->
     <script
-      src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"
-      integrity="sha256-aS0B0wnsaDByLfE16h4MDCP1fQFccysd1YWOcV+gbBo="
-      crossorigin="anonymous"
-    ></script>
+        src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"
+        integrity="sha256-aS0B0wnsaDByLfE16h4MDCP1fQFccysd1YWOcV+gbBo="
+        crossorigin="anonymous"
+        ></script>
   </head>
   <body>
     <div id="root"></div>
@@ -32,13 +32,17 @@
       import * as zebar from 'https://esm.sh/zebar@2';
 
       const providers = zebar.createProviderGroup({
-        network: { type: 'network' },
+        network: { type: 'network', refreshInterval: '2000'},
         glazewm: { type: 'glazewm' },
-        cpu: { type: 'cpu' },
-        date: { type: 'date', formatting: 'EEE d MMM t' },
-        battery: { type: 'battery' },
-        memory: { type: 'memory' },
+        cpu: { type: 'cpu', refreshInterval: '2000' },
+        date: { type: 'date', formatting: 'EEE	dd MMM hh:mm:ss a' },
+        battery: { type: 'battery', refreshInterval: '2000'},
+        memory: { type: 'memory', refreshInterval: '2000'},
         weather: { type: 'weather' },
+        host: { type: 'host', refreshInterval: '5000'},
+        ip: { type: 'ip' },
+        disk: { type: 'disk', refreshInterval: '15000' },
+        audio: { type: 'audio' }
       });
 
       createRoot(document.getElementById('root')).render(<App />);
@@ -50,6 +54,23 @@
           providers.onOutput(() => setOutput(providers.outputMap));
         }, []);
 
+      function msToTime(duration) {
+        var milliseconds = Math.floor((duration % 1000) / 100),
+          seconds = Math.floor((duration / 1000) % 60),
+          minutes = Math.floor((duration / (1000 * 60)) % 60),
+          hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+        return hours + "h:" + minutes + "m";
+      }
+
+      function bytesToMegabytes(bytes) {
+        return (bytes / (1024 * 1024)).toFixed(1);
+      }
+
         // Get icon to show for current network status.
         function getNetworkIcon(networkOutput) {
           switch (networkOutput.defaultInterface?.type) {
@@ -57,7 +78,7 @@
               return <i className="nf nf-md-ethernet_cable"></i>;
             case 'wifi':
               if (networkOutput.defaultGateway?.signalStrength >= 80) {
-                return <i className="nf nf-md-wifi_strength_4"></i>;
+                return <span className="nf nf-md-wifi_strength_4"></span>;
               } else if (
                 networkOutput.defaultGateway?.signalStrength >= 65
               ) {
@@ -83,14 +104,14 @@
         // Get icon to show for how much of the battery is charged.
         function getBatteryIcon(batteryOutput) {
           if (batteryOutput.chargePercent > 90)
-            return <i className="nf nf-fa-battery_4"></i>;
+            return <i className="nf nf-fa-battery_4 green"></i>;
           if (batteryOutput.chargePercent > 70)
-            return <i className="nf nf-fa-battery_3"></i>;
+            return <i className="nf nf-fa-battery_3 orange"></i>;
           if (batteryOutput.chargePercent > 40)
-            return <i className="nf nf-fa-battery_2"></i>;
+            return <i className="nf nf-fa-battery_2 orange"></i>;
           if (batteryOutput.chargePercent > 20)
-            return <i className="nf nf-fa-battery_1"></i>;
-          return <i className="nf nf-fa-battery_0"></i>;
+            return <i className="nf nf-fa-battery_1 orange"></i>;
+          return <i className="nf nf-fa-battery_0 red"></i>;
         }
 
         // Get icon to show for current weather status.
@@ -126,7 +147,6 @@
         return (
           <div className="app">
             <div className="left">
-              <i className="logo nf nf-fa-windows"></i>
               {output.glazewm && (
                 <div className="workspaces">
                   {output.glazewm.currentWorkspaces.map(workspace => (
@@ -146,7 +166,12 @@
               )}
             </div>
 
-            <div className="center">{output.date?.formatted}</div>
+            <div className="center date-color">
+                  <button className="btn" onClick={() => { output.glazewm.runCommand('shell-exec %userprofile%/.glzr/zebar/script/OpenActionCenter.vbs')
+          }}>
+                  <span>{output.date?.formatted}</span>
+                  </button>
+            </div>
 
             <div className="right">
               {output.glazewm && (
@@ -155,11 +180,6 @@
                     <button
                       className="binding-mode"
                       key={bindingMode.name}
-                      onClick={() =>
-                        output.glazewm.runCommand(
-                          `wm-disable-binding-mode --name ${bindingMode.name}`,
-                        )
-                      }
                     >
                       {bindingMode.displayName ?? bindingMode.name}
                     </button>
@@ -177,47 +197,105 @@
               {output.network && (
                 <div className="network">
                   {getNetworkIcon(output.network)}
-                  {output.network.defaultGateway?.ssid}
                 </div>
               )}
 
-              {output.memory && (
-                <div className="memory">
-                  <i className="nf nf-fae-chip"></i>
-                  {Math.round(output.memory.usage)}%
+
+              {output.audio && (
+                <div className="volume"><button className="btn" onClick={() => { output.audio.setVolume(output.audio.defaultPlaybackDevice.volume + 5)}}><span className="nf-md-volume_plus"></span></button></div>
+              )}
+
+              {output.audio && (
+                <div className="audio">
+                  {output.audio.defaultPlaybackDevice.volume}
                 </div>
               )}
 
+              {output.audio && (
+                <div className="volume"><button className="btn" onClick={() => { output.audio.setVolume(output.audio.defaultPlaybackDevice.volume - 5)}}><span className="nf-md-volume_minus"></span></button></div>
+              )}
+
+              {output.network && (
+                <div className="stack-nw-speed">
+                  <div>
+                  <span className="nf-oct-upload"></span>&nbsp;
+                  {(output.network.traffic.transmitted.iecValue).toFixed(1)}
+                  {output.network.traffic.transmitted.iecUnit}
+                  </div>
+
+                  <div>
+                  <span className="nf-oct-download"></span>&nbsp;
+                  {(output.network.traffic.received.iecValue).toFixed(1)}
+                  {output.network.traffic.received.iecUnit}
+                  </div>
+                  </div>
+              )}
+
+              <div className="stack">
               {output.cpu && (
-                <div className="cpu">
+                <div className="cpu1">
                   <i className="nf nf-oct-cpu"></i>
 
                   {/* Change the text color if the CPU usage is high. */}
                   <span
                     className={output.cpu.usage > 85 ? 'high-usage' : ''}
                   >
-                    {Math.round(output.cpu.usage)}%
+                    {Math.round(output.cpu.usage)}% 
                   </span>
                 </div>
               )}
 
+              {output.memory && (
+                <div className="memory1">
+                <button className="btn1" onClick={() => { output.glazewm.runCommand('shell-exec %userprofile%/.glzr/zebar/script/OpenTaskManager.vbs')
+          }}>
+                  <i className="nf nf-fae-chip"></i>
+                  <span
+                    className={output.memory.usage >= 85 ? 'high-usage' : ''}
+                  >
+                    {Math.round(output.memory.usage)}%
+                  </span>
+                  </button>
+                </div>
+              )}
+              </div>
+
+              <div className="stack">
               {output.battery && (
-                <div className="battery">
+                <div className="battery1">
                   {/* Show icon for whether battery is charging. */}
                   {output.battery.isCharging && (
-                    <i className="nf nf-md-power_plug charging-icon"></i>
+                    <i className="nf nf-md-power_plug charging-icon red"></i>
                   )}
                   {getBatteryIcon(output.battery)}
-                  {Math.round(output.battery.chargePercent)}%
-                </div>
+                  <span style={{color: output.battery.chargePercent < 20 ? "#ff4500" : output.battery.chargePercent > 90 ? "#33ff57" : "orange"}}>{Math.round(output.battery.chargePercent)}%</span>
+                </div> 
               )}
 
-              {output.weather && (
-                <div className="weather">
-                  {getWeatherIcon(output.weather)}
-                  {Math.round(output.weather.celsiusTemp)}°C
-                </div>
+
+              {output.battery && (
+                <div className="cycle_count1">
+                <span className="nf-md-repeat"></span>&nbsp;
+                  {output.battery.cycleCount}
+                </div> 
               )}
+              </div>
+
+              <div className="stack">
+              {output.host && (
+                <div className="uptime1">
+                  {msToTime(output.host.uptime)}
+                </div> 
+              )}
+
+              {output.disk && (
+                <div className="disk">
+                    {(output.disk.disks[0].availableSpace.iecValue).toFixed(1)}
+                    {output.disk.disks[0].availableSpace.iecUnit}
+                </div> 
+              )}
+              </div>
+
             </div>
           </div>
         );

@@ -11,7 +11,7 @@
             "name": "default",
             "anchor": "top_left",
             "offsetX": "0px",
-            "offsetY": "0px",
+            "offsetY": "5px",
             "width": "100%",
             "height": "46px",
             "monitorSelection": {

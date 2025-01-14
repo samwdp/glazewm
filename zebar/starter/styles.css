@@ -50,7 +50,6 @@ body,
 #root {
     border-bottom: 1px solid rgb(255 255 255 / 5%);
     background: rgba(28, 28, 28, 0);
-    backdrop-filter: blur(6px);
 }
 
 .app {
@@ -58,10 +57,13 @@ body,
     grid-template-columns: 1fr 0.5fr 1fr;
     align-items: center;
     height: 100%;
-    font-family: LiterationMono Nerd Font SemiBold, monospace;
-    padding: 5px 1.5vw;
+    font-family: Lilex Nerd Font SemiBold, monospace;
+    backdrop-filter: blur(6px);
+    padding: 5px 1vw;
+    margin-left: 5px;
+    margin-right: 5px;
     background: rgba(28, 28, 28, 0.6);
-    border: 2px solid var(--green);
+    border: 1px solid var(--green);
     border-radius: 13px;
 }
 
@@ -129,6 +131,7 @@ body,
 
 .btn {
     border: none;
+    font-weight: lighter;
     background: transparent;
     color: var(--fg);
     cursor: pointer;

@@ -301,9 +301,6 @@ keybindings:
   - commands: ['shell-exec wezterm-gui']
     bindings: ['alt+enter']
 
-  - commands: ['shell-exec %ProgramFiles%/Zen Browser/zen.exe']
-    bindings: ['alt+shift+w']
-
   - commands: ['shell-exec %ProgramFiles%/Zen Twilight/zen.exe']
     bindings: ['alt+w']
 

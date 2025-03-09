@@ -165,7 +165,7 @@ window_rules:
 
   - commands: ["move --workspace 5"]
     match: 
-      - window_process: { regex: "[Ss]sms|SSMS" }
+      - window_process: { regex: "[Ss]sms|SSMS|azuredatastudio" }
 
   - commands: ["move --workspace 6"]
     match:

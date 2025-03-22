@@ -120,30 +120,30 @@ window_behavior:
 workspaces:
   - name: "1"
     bind_to_monitor: 0
-    display_name: "󰫔 Music"
+    display_name: "♫"
   - name: "2"
-    display_name: " Devenv"
+    display_name: ""
     bind_to_monitor: 1
   - name: "3"
-    display_name: " Zen"
+    display_name: ""
     bind_to_monitor: 1
   - name: "4"
-    display_name: " Term"
+    display_name: ""
     bind_to_monitor: 1
   - name: "5"
-    display_name: "📂 Exp"
+    display_name: ""
     bind_to_monitor: 1
   - name: "6"
-    display_name: " Slack"
+    display_name: ""
     bind_to_monitor: 0
   - name: "7"
-    display_name: "󰊻 Teams"
+    display_name: "󰊻"
     bind_to_monitor: 0
   - name: "8"
-    display_name: "📧 Email"
+    display_name: "󰇮"
     bind_to_monitor: 0
   - name: "9"
-    display_name: " Home"
+    display_name: ""
     bind_to_monitor: 0
 
 window_rules:

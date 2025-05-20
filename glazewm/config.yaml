@@ -287,6 +287,9 @@ keybindings:
   - commands: ['wm-exit']
     bindings: ['alt+shift+e']
 
+  - commands: ['shell-exec %ProgramFiles%/Voidstar/FilePilot/FPilot.exe']
+    bindings: ['alt+ctrl+e']
+
   # Re-evaluate configuration file.
   - commands: ['wm-reload-config']
     bindings: ['alt+shift+r']

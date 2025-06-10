@@ -161,7 +161,7 @@ window_rules:
 
   - commands: ["move --workspace 4"]
     match: 
-      - window_process: { regex: "wezterm-gui|Terminal|speedcrunch" }
+      - window_process: { regex: "wezterm-gui|Terminal|speedcrunch|emacs|runemacs" }
 
   - commands: ["move --workspace 5"]
     match: 
@@ -303,6 +303,9 @@ keybindings:
   # Terminal and Git Bash respectively.
   - commands: ['shell-exec wezterm-gui']
     bindings: ['alt+enter']
+
+  - commands: ['shell-exec %userprofile%/.config/runemacs.cmd']
+    bindings: ['alt+e']
 
   - commands: ['shell-exec %ProgramFiles%/Zen Twilight/zen.exe']
     bindings: ['alt+w']

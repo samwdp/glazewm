@@ -157,7 +157,7 @@ window_rules:
 
   - commands: ["move --workspace 3"]
     match: 
-      - window_process: { regex: "zen" }
+      - window_process: { regex: "vivaldi" }
 
   - commands: ["move --workspace 4"]
     match: 
@@ -307,7 +307,7 @@ keybindings:
   - commands: ['shell-exec %userprofile%/.config/runemacs.cmd']
     bindings: ['alt+e']
 
-  - commands: ['shell-exec %ProgramFiles%/Zen Twilight/zen.exe']
+  - commands: ['shell-exec %ProgramFiles%/Vivaldi/Application/vivaldi.exe']
     bindings: ['alt+w']
 
   - commands: ['shell-exec c:/Program Files (x86)/SpeedCrunch/speedcrunch.exe']

@@ -1,4 +1,4 @@
-red: &red "#cc241b"
+red: &red "#cc24ub"
 green: &green "#98971a"
 yellow: &yellow "#d79921"
 blue: &blue "#458588"
@@ -120,15 +120,15 @@ window_behavior:
 workspaces:
   - name: "1"
     bind_to_monitor: 0
-    display_name: "♫"
+    display_name: ""
   - name: "2"
-    display_name: ""
+    display_name: "󰘐"
     bind_to_monitor: 1
   - name: "3"
-    display_name: ""
+    display_name: ""
     bind_to_monitor: 1
   - name: "4"
-    display_name: ""
+    display_name: ""
     bind_to_monitor: 1
   - name: "5"
     display_name: ""
@@ -143,7 +143,7 @@ workspaces:
     display_name: "󰇮"
     bind_to_monitor: 0
   - name: "9"
-    display_name: ""
+    display_name: ""
     bind_to_monitor: 0
 
 window_rules:
@@ -304,7 +304,7 @@ keybindings:
   - commands: ['shell-exec wezterm-gui']
     bindings: ['alt+enter']
 
-  - commands: ['shell-exec %userprofile%/.config/runemacs.cmd']
+  - commands: ['shell-exec emacsclientw.exe -c -a runemacs.exe']
     bindings: ['alt+e']
 
   - commands: ['shell-exec %ProgramFiles%/Vivaldi/Application/vivaldi.exe']

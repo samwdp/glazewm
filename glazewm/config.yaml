@@ -179,6 +179,10 @@ window_rules:
     match:
       - window_process: { regex: "olk" }
 
+  - commands: ["move --workspace 9"]
+    match:
+      - window_process: { regex: "youtube-music|AzureDevOpsUI" }
+
   - commands: ['ignore']
     match:
       # Ignores any Zebar windows.
@@ -288,7 +292,7 @@ keybindings:
     bindings: ['alt+shift+e']
 
   - commands: ['shell-exec %ProgramFiles%/Voidstar/FilePilot/FPilot.exe']
-    bindings: ['alt+ctrl+e']
+    bindings: ['alt+ctrl+p']
 
   # Re-evaluate configuration file.
   - commands: ['wm-reload-config']

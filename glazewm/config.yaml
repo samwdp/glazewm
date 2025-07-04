@@ -119,37 +119,37 @@ window_behavior:
 
 workspaces:
   - name: "1"
-    bind_to_monitor: 0
+    bind_to_monitor: 1
     display_name: ""
   - name: "2"
     display_name: "󰘐"
-    bind_to_monitor: 1
+    bind_to_monitor: 0
   - name: "3"
     display_name: ""
-    bind_to_monitor: 1
+    bind_to_monitor: 0
   - name: "4"
     display_name: ""
-    bind_to_monitor: 1
+    bind_to_monitor: 0
   - name: "5"
     display_name: ""
-    bind_to_monitor: 1
+    bind_to_monitor: 0
   - name: "6"
     display_name: ""
-    bind_to_monitor: 0
+    bind_to_monitor: 1
   - name: "7"
     display_name: "󰊻"
-    bind_to_monitor: 0
+    bind_to_monitor: 1
   - name: "8"
     display_name: "󰇮"
-    bind_to_monitor: 0
+    bind_to_monitor: 1
   - name: "9"
     display_name: ""
-    bind_to_monitor: 0
+    bind_to_monitor: 1
 
 window_rules:
   - commands: ["move --workspace 1"]
     match: 
-      - window_process: { regex: "brave|youtube-music-desktop-app" }
+      - window_process: { regex: "brave|youtube-music-desktop-app|youtube-music|YouTube Music" }
 
   - commands: ["move --workspace 2"]
     match: 
@@ -181,7 +181,7 @@ window_rules:
 
   - commands: ["move --workspace 9"]
     match:
-      - window_process: { regex: "youtube-music|AzureDevOpsUI" }
+      - window_process: { regex: "AzureDevOpsUI" }
 
   - commands: ['ignore']
     match:
@@ -239,9 +239,9 @@ keybindings:
 
   # Resize focused window by a percentage or pixel amount.
   - commands: ['resize --width -2%']
-    bindings: ['alt+u']
+    bindings: ['alt+shift+-']
   - commands: ['resize --width +2%']
-    bindings: ['alt+p']
+    bindings: ['alt+-']
   - commands: ['resize --height +2%']
     bindings: ['alt+o']
   - commands: ['resize --height -2%']
@@ -320,7 +320,7 @@ keybindings:
   - commands: ['shell-exec C:\Program Files\FirefoxPWA\firefoxpwa.exe site launch 01JFA1CVSVXN65MN8SK8814EWT']
     bindings: ['alt+shift+b']
 
-  - commands: ['shell-exec %userprofile%/AppData/Local/youtube_music_desktop_app/app-2.0.6/youtube-music-desktop-app.exe']
+  - commands: ['shell-exec %userprofile%/AppData/Local/Programs/youtube-music\YouTube Music.exe']
     bindings: ['alt+shift+m']
 
   # Focus the next/previous active workspace defined in `workspaces` config.

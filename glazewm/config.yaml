@@ -161,7 +161,7 @@ window_rules:
 
     - commands: ["move --workspace 3"]
       match:
-          - window_process: { regex: "vivaldi" }
+          - window_process: { regex: "vivaldi|zen" }
 
     - commands: ["move --workspace 4"]
       match:
@@ -296,9 +296,6 @@ keybindings:
     - commands: ["wm-exit"]
       bindings: ["alt+shift+e"]
 
-    - commands: ["shell-exec %ProgramFiles%/Voidstar/FilePilot/FPilot.exe"]
-      bindings: ["alt+ctrl+p"]
-
     # Re-evaluate configuration file.
     - commands: ["wm-reload-config"]
       bindings: ["alt+shift+r"]
@@ -316,7 +313,10 @@ keybindings:
     - commands: ["shell-exec emacsclientw.exe -c --server-file c:/Users/sam/.emacs.d/var/server/auth/server"]
       bindings: ["alt+e"]
 
-    - commands: ["shell-exec %ProgramFiles%/Vivaldi/Application/vivaldi.exe"]
+    # - commands: ["shell-exec %ProgramFiles%/Vivaldi/Application/vivaldi.exe"]
+    #   bindings: ["alt+w"]
+
+    - commands: ["shell-exec %ProgramFiles%/Zen Twilight/zen.exe"]
       bindings: ["alt+w"]
 
     - commands:
